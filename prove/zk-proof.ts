@@ -18,6 +18,7 @@ async function zk_prove() {
 
     console.log("vk_u8_array is:{}", vk_hex_u8_array);``
     const public_inputs_u8_array = fromHEX(public_inputs_bytes);
+    console.log("public_inputs_u8_array length is :",public_inputs_u8_array.length);
     const proof_points_u8_array = fromHEX(proof_points_bytes);
 
     // 组织交易数据
@@ -25,13 +26,26 @@ async function zk_prove() {
     tx.moveCall({
         target: `${pkgId}::${groth_test}::verify_proof`,
         arguments: [
-          tx.pure(bcs.vector(bcs.u8()).serialize(vk_hex_u8_array)),
-          tx.pure(bcs.vector(bcs.u8()).serialize(public_inputs_u8_array)),
-          tx.pure(bcs.vector(bcs.u8()).serialize(proof_points_u8_array)),
+          tx.pure(bcs.vector(bcs.u8()).serialize(vk_hex_u8_array,{
+                /** The initial size (in bytes) of the buffer tht will be allocated */
+                size: 1024,
+                /** The maximum size (in bytes) that the buffer is allowed to grow to */
+                maxSize: 204800,
+                /** The amount of bytes that will be allocated whenever additional memory is required */
+                // allocateSize?: number;
+          })),
+          tx.pure(bcs.vector(bcs.u8()).serialize(public_inputs_u8_array,{
+            size:1024,
+            maxSize:204800,
+          })),
+          tx.pure(bcs.vector(bcs.u8()).serialize(proof_points_u8_array,{
+            size:1024,
+            maxSize:204800,
+          })),
           ],
     });
 
-    tx.setGasBudget(30000000);
+    tx.setGasBudget(300000000);
 
     // 发起交易
     const result = await suiClient.signAndExecuteTransactionBlock({
