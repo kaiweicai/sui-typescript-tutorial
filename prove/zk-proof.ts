@@ -5,7 +5,7 @@ import { bcs } from "@mysten/bcs";
 
 async function zk_prove() {
     // 合约信息
-    const pkgId = "0x231475122b962abb2939564f4c0c3793d59434eb00fa519ee642b2e88c1b7670";
+    const pkgId = "0x32bac897eebf70b1e59a894695370977545d56f46f4e173537bed5a597ebe23a";
     const groth_test = "groth16_test";
     // vk_bytes:vector<u8>,public_inputs_bytes:vector<u8>,proof_points_bytes
     const vk_hex =

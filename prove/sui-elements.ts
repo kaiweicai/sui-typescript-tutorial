@@ -5,7 +5,7 @@ import { fromB64 } from '@mysten/sui.js/utils';
 dotenv.config();
 
 // 初始化SUI Client, 用于和主网(mainnet)交互
-const suiClient = new SuiClient({ url: getFullnodeUrl('testnet') });
+const suiClient = new SuiClient({ url: getFullnodeUrl('localnet') });
 // 从环境变量读取secretKey
 const secretKey = process.env.SECRET_KEY || '';
 console.log("secretKey is:"+secretKey);
